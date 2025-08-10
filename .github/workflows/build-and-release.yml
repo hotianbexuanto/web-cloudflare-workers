@@ -5,15 +5,14 @@ permissions:
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'package.json'
+  schedule:
+    - cron: '0 */1 * * *'
 
 jobs:
   build:
+    if: |
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'schedule' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     
     steps:
@@ -33,10 +32,10 @@ jobs:
           node-version: "latest"
       
       - name: 安装依赖
-        run: npm install
+        run: npm install --production
       
       - name: 构建项目
-        run: npm run build
+        run: NODE_ENV=mangle npm run build
       
       - name: 读取发布说明
         id: read_release
@@ -48,13 +47,14 @@ jobs:
           r="${r//$'\r'/'%0D'}"                             
           echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
       
-      - name: 创建 GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 上传发布资产
+        uses: svenstaro/upload-release-action@v2
         with:
-          tag_name: v${{ env.RELEASE_VERSION }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/*
+          tag: v${{ env.RELEASE_VERSION }}
           release_name: Release v${{ env.RELEASE_VERSION }}
+          overwrite: true
+          file_glob: true
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
           body: ${{ steps.read_release.outputs.RELEASE_BODY }}
-          draft: false
-          prerelease: false
