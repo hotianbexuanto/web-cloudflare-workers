@@ -1,0 +1,14 @@
+name = "web-cloudflare-workers"
+main = "src/index.js"
+compatibility_date = "2025-08-10"
+
+[build]
+command = "npm run build"
+watch_dir = "src"
+
+[vars]
+# Environment variables
+ENVIRONMENT = "development"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
