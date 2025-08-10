@@ -7,7 +7,7 @@ command = "npm run build"
 watch_dir = "src"
 
 [vars]
-# Environment variables
+# 环境变量
 ENVIRONMENT = "development"
 
 [env.production]

@@ -1,4 +1,4 @@
-name: Build and Release
+name: 构建和发布
 
 permissions:
   contents: write
@@ -10,36 +10,35 @@ on:
       - main
     paths:
       - 'src/**'
-      - 'wrangler.toml'
       - 'package.json'
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Check out the code
+      - name: 检出代码
         uses: actions/checkout@v4
       
-      - name: Get release version
+      - name: 获取发布版本
         id: get_version
         run: echo "RELEASE_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
       
-      - name: Check release version
-        run: echo "Release version is $RELEASE_VERSION"
+      - name: 检查发布版本
+        run: echo "发布版本为 $RELEASE_VERSION"
       
-      - name: Set up Node.js
+      - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "latest"
       
-      - name: Install dependencies
+      - name: 安装依赖
         run: npm install
       
-      - name: Build project
+      - name: 构建项目
         run: npm run build
       
-      - name: Read release note
+      - name: 读取发布说明
         id: read_release
         shell: bash
         run: |
@@ -49,13 +48,7 @@ jobs:
           r="${r//$'\r'/'%0D'}"                             
           echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
       
-      - name: Publish to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        
-      - name: Create GitHub Release
+      - name: 创建 GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

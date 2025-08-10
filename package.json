@@ -1,10 +1,10 @@
 {
   "name": "web-cloudflare-workers",
   "version": "1.0.0",
-  "description": "A template for Cloudflare Workers",
-  "main": "dist/worker.js",
+  "description": "Cloudflare Workers 的模板项目",
+  "main": "src/index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "wrangler deploy src/index.js --dry-run --outdir=dist",
     "dev": "wrangler dev src/index.js",
     "deploy": "wrangler deploy src/index.js"
   },
@@ -16,8 +16,6 @@
   "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4",
     "wrangler": "^3.0.0"
   }
 }

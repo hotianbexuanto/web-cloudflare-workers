@@ -1,20 +1,20 @@
 /**
- * Welcome to Cloudflare Workers! This is your first worker.
+ * 欢迎使用 Cloudflare Workers！这是您的第一个 worker。
  *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
+ * - 在终端中运行 `npm run dev` 启动开发服务器
+ * - 在浏览器中打开 http://localhost:8787/ 查看 worker 的运行情况
+ * - 运行 `npm run deploy` 发布您的 worker
  *
- * Learn more at https://developers.cloudflare.com/workers/
+ * 了解更多：https://developers.cloudflare.com/workers/
  */
 
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     
-    // Handle different routes
+    // 处理不同路由
     if (url.pathname === '/') {
-      return new Response('Hello, World! This is a Cloudflare Worker template.', {
+      return new Response('你好，世界！这是一个 Cloudflare Worker 模板。', {
         headers: {
           'content-type': 'text/plain;charset=UTF-8',
         },
@@ -22,15 +22,15 @@ export default {
     }
     
     if (url.pathname === '/json') {
-      return new Response(JSON.stringify({ message: 'Hello, World!', environment: env.ENVIRONMENT }), {
+      return new Response(JSON.stringify({ message: '你好，世界！', environment: env.ENVIRONMENT }), {
         headers: {
           'content-type': 'application/json;charset=UTF-8',
         },
       });
     }
     
-    // Default response for other routes
-    return new Response('Not Found', {
+    // 其他路由的默认响应
+    return new Response('未找到', {
       status: 404,
       headers: {
         'content-type': 'text/plain;charset=UTF-8',

@@ -1,24 +1,24 @@
-# Release Notes
+# 发布说明
 
 ## v1.0.0
 
-Initial release of the Cloudflare Worker template.
+Cloudflare Worker 模板的初始版本。
 
-### Features
+### 功能特性
 
-- Basic Cloudflare Worker template
-- Sample routes for testing
-- GitHub Actions workflow for automated builds and releases
-- Environment-specific configurations
+- 基础的 Cloudflare Worker 模板
+- 用于测试的示例路由
+- 用于自动化构建和发布的 GitHub Actions 工作流
+- 环境特定的配置
 
-### Usage
+### 使用方法
 
-1. Clone the repository
-2. Install dependencies with `npm install`
-3. Configure your Cloudflare credentials
-4. Deploy with `npm run deploy`
+1. 克隆仓库
+2. 使用 `npm install` 安装依赖
+3. 配置您的 Cloudflare 凭据
+4. 使用 `npm run deploy` 部署
 
-### Configuration
+### 配置说明
 
-- Update `wrangler.toml` with your Cloudflare account details
-- Modify `src/index.js` to implement your worker logic
+- 在 `wrangler.toml` 中更新您的 Cloudflare 账户详情
+- 修改 `src/index.js` 来实现您的 worker 逻辑
